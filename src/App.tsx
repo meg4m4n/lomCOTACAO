@@ -9,6 +9,7 @@ import DashboardPage from './pages/DashboardPage';
 import ClientsPage from './pages/ClientsPage';
 import BudgetsPage from './pages/BudgetsPage';
 import BudgetFormPage from './pages/BudgetFormPage';
+import UsersPage from './pages/UsersPage';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/budgets" element={<BudgetsPage />} />
             <Route path="/budgets/new" element={<BudgetFormPage />} />
             <Route path="/budgets/:id" element={<BudgetFormPage />} />
+            <Route path="/users" element={<UsersPage />} />
           </Route>
         </Routes>
       </AuthProvider>

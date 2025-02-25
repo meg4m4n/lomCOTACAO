@@ -299,139 +299,122 @@ export default function BudgetFormPage() {
             </button>
           </div>
 
-          <div className="space-y-4">
-            {items.map((item, index) => (
-              <div key={index} className="border rounded-lg p-4">
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-sm font-medium text-gray-700">
-                    Item {index + 1}
-                  </h3>
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveItem(index)}
-                    className="text-red-600 hover:text-red-900"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Descrição
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={item.description}
-                      onChange={(e) => handleItemChange(index, 'description', e.target.value)}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Tipo
-                    </label>
-                    <select
-                      value={item.type}
-                      onChange={(e) => handleItemChange(index, 'type', e.target.value)}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    >
-                      <option value="material">Material</option>
-                      <option value="extra">Extra</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Quantidade
-                    </label>
-                    <input
-                      type="number"
-                      min="1"
-                      step="1"
-                      required
-                      value={item.quantity}
-                      onChange={(e) => handleItemChange(index, 'quantity', Number(e.target.value))}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Preço Unitário
-                    </label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      required
-                      value={item.unit_price}
-                      onChange={(e) => handleItemChange(index, 'unit_price', Number(e.target.value))}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Margem (%)
-                    </label>
-                    <input
-                      type="number"
-                      min="0"
-                      max="100"
-                      step="1"
-                      required
-                      value={item.margin}
-                      onChange={(e) => handleItemChange(index, 'margin', Number(e.target.value))}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Preço Total
-                    </label>
-                    <input
-                      type="number"
-                      readOnly
-                      value={item.total_price}
-                      className="mt-1 block w-full rounded-md border-gray-300 bg-gray-50 shadow-sm"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Imagem
-                    </label>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          handleImageUpload(index, file);
-                        }
-                      }}
-                      className="mt-1 block w-full text-sm text-gray-500
-                        file:mr-4 file:py-2 file:px-4
-                        file:rounded-md file:border-0
-                        file:text-sm file:font-medium
-                        file:bg-indigo-50 file:text-indigo-700
-                        hover:file:bg-indigo-100"
-                    />
-                    {item.image_url && (
-                      <img
-                        src={item.image_url}
-                        alt="Item preview"
-                        className="mt-2 h-20 w-20 object-cover rounded-md"
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead>
+                <tr>
+                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Descrição</th>
+                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Tipo</th>
+                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Qtd</th>
+                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Preço Unit.</th>
+                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Margem %</th>
+                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Total</th>
+                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Imagem</th>
+                  <th className="px-3 py-2"></th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {items.map((item, index) => (
+                  <tr key={index}>
+                    <td className="px-3 py-2">
+                      <input
+                        type="text"
+                        required
+                        value={item.description}
+                        onChange={(e) => handleItemChange(index, 'description', e.target.value)}
+                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
                       />
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
+                    </td>
+                    <td className="px-3 py-2">
+                      <select
+                        value={item.type}
+                        onChange={(e) => handleItemChange(index, 'type', e.target.value)}
+                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+                      >
+                        <option value="material">Material</option>
+                        <option value="extra">Extra</option>
+                      </select>
+                    </td>
+                    <td className="px-3 py-2">
+                      <input
+                        type="number"
+                        min="1"
+                        step="1"
+                        required
+                        value={item.quantity}
+                        onChange={(e) => handleItemChange(index, 'quantity', Number(e.target.value))}
+                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+                      />
+                    </td>
+                    <td className="px-3 py-2">
+                      <input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        required
+                        value={item.unit_price}
+                        onChange={(e) => handleItemChange(index, 'unit_price', Number(e.target.value))}
+                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+                      />
+                    </td>
+                    <td className="px-3 py-2">
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        step="1"
+                        required
+                        value={item.margin}
+                        onChange={(e) => handleItemChange(index, 'margin', Number(e.target.value))}
+                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+                      />
+                    </td>
+                    <td className="px-3 py-2">
+                      <input
+                        type="number"
+                        readOnly
+                        value={item.total_price}
+                        className="block w-full rounded-md border-gray-300 bg-gray-50 shadow-sm text-sm"
+                      />
+                    </td>
+                    <td className="px-3 py-2">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            handleImageUpload(index, file);
+                          }
+                        }}
+                        className="block w-full text-sm text-gray-500
+                          file:mr-4 file:py-2 file:px-4
+                          file:rounded-md file:border-0
+                          file:text-sm file:font-medium
+                          file:bg-indigo-50 file:text-indigo-700
+                          hover:file:bg-indigo-100"
+                      />
+                      {item.image_url && (
+                        <img
+                          src={item.image_url}
+                          alt="Item preview"
+                          className="mt-2 h-10 w-10 object-cover rounded-md"
+                        />
+                      )}
+                    </td>
+                    <td className="px-3 py-2">
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveItem(index)}
+                        className="text-red-600 hover:text-red-900"
+                      >
+                        <X className="h-5 w-5" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
 

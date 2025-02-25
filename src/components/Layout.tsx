@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { FileText, Users, LayoutDashboard, LogOut } from 'lucide-react';
+import { FileText, Users, LayoutDashboard, LogOut, UserCircle } from 'lucide-react';
 
 export default function Layout() {
   const { signOut } = useAuth();
@@ -11,6 +11,7 @@ export default function Layout() {
     { name: 'Dashboard', href: '/', icon: LayoutDashboard },
     { name: 'Clientes', href: '/clients', icon: Users },
     { name: 'Orçamentos', href: '/budgets', icon: FileText },
+    { name: 'Usuários', href: '/users', icon: UserCircle },
   ];
 
   return (
